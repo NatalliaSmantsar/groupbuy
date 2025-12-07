@@ -1,0 +1,122 @@
+/* === УВЕДОМЛЕНИЯ === */
+.notifications-section {
+    margin-top: 20px;
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.notification-item {
+    background: #fff;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.notification-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.notification-item.unread {
+    background: #f0f6ff;
+    border-left: 4px solid #4b3ff0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.notification-title {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 600;
+    flex: 1;
+}
+
+.notification-status {
+    font-size: 0.75em;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: #6c757d;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.notification-item.unread .notification-status {
+    background: #4b3ff0;
+}
+
+.notification-meta {
+    font-size: 0.875em;
+    color: #6c757d;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.notification-meta a {
+    color: #4b3ff0;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.notification-meta a:hover {
+    text-decoration: underline;
+}
+
+.notification-body {
+    color: #495057;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #e9ecef;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.notification-actions .btn {
+    flex: 0 1 auto;
+    min-width: 160px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .notification-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .notification-actions {
+        flex-direction: column;
+    }
+    
+    .notification-actions .btn {
+        min-width: 100%;
+        text-align: center;
+    }
+    
+    .notification-item {
+        padding: 16px;
+    }
+}

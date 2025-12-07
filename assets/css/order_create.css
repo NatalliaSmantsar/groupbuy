@@ -1,0 +1,121 @@
+/* Стили для страницы создания заказа */
+.recommendation-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.recommendation-card .card-title {
+    color: white;
+    margin: 0;
+}
+
+.recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.recommendation-item {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.recommendation-best {
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.recommendation-rank {
+    font-size: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.recommendation-time {
+    margin-bottom: 12px;
+}
+
+.recommendation-day {
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.recommendation-hour {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.recommendation-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.stat-label {
+    opacity: 0.8;
+}
+
+.stat-value {
+    font-weight: bold;
+}
+
+.recommendation-tip {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    border-left: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.calculation-card {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+}
+
+.calculation-info {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.calculation-details {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Стили для вкладок создания заказа */
+.create-order-tabs {
+    margin-bottom: 30px;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .recommendation-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .recommendation-item {
+        padding: 12px;
+    }
+}
