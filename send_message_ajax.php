@@ -33,7 +33,6 @@ if (strlen($text) > 500) {
     exit;
 }
 
-// Проверяем существование закупки
 $stmt = $conn->prepare("SELECT id FROM group_orders WHERE id = ?");
 $stmt->bind_param("i", $group_order_id);
 $stmt->execute();
@@ -44,7 +43,6 @@ if (!$order) {
     exit;
 }
 
-// Получаем имя пользователя
 $user_stmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
 $user_stmt->bind_param("i", $_SESSION['user_id']);
 $user_stmt->execute();
@@ -55,12 +53,10 @@ if (!$user) {
     exit;
 }
 
-// Сохраняем сообщение
 $stmt = $conn->prepare("INSERT INTO messages (group_order_id, sender_id, text, created_at) VALUES (?, ?, ?, NOW())");
 $stmt->bind_param("iis", $group_order_id, $_SESSION['user_id'], $text);
 
 if ($stmt->execute()) {
-    // Возвращаем данные для отображения сообщения
     echo json_encode([
         'success' => true,
         'message' => [

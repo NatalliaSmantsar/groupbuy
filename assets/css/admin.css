@@ -1,4 +1,3 @@
-/* ==== Общие стили ==== */
 body {
     font-family: "Segoe UI", Arial, sans-serif;
     background: #f4f4f8;
@@ -7,7 +6,6 @@ body {
     color: #333;
 }
 
-/* ==== Шапка ==== */
 .admin-header {
     background: linear-gradient(90deg, #4b3ff0, #6a40c9);
     color: #fff;
@@ -34,13 +32,11 @@ body {
     opacity: 0.8;
 }
 
-/* ==== Основной контейнер ==== */
 .admin-container {
     display: flex;
     min-height: calc(100vh - 100px);
 }
 
-/* ==== Боковая панель ==== */
 .sidebar {
     width: 220px;
     background: #fff;
@@ -74,7 +70,6 @@ body {
     font-weight: 600;
 }
 
-/* ==== Основной контент ==== */
 .admin-content {
     flex: 1;
     padding: 30px;
@@ -86,7 +81,6 @@ body {
     color: #333;
 }
 
-/* ==== Таблицы ==== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -112,7 +106,6 @@ table tr:hover {
     background: #fafaff;
 }
 
-/* ==== Кнопки ==== */
 .btn {
     display: inline-block;
     background: linear-gradient(90deg, #4b3ff0, #6a40c9);
@@ -137,7 +130,6 @@ table tr:hover {
     font-size: 13px;
 }
 
-/* ==== Ссылки как кнопки ==== */
 a.btn {
     display: inline-block;
     text-decoration: none;
@@ -145,14 +137,12 @@ a.btn {
     box-sizing: border-box;
 }
 
-/* ==== Контейнер для кнопок ==== */
 .form-actions {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-/* ==== Формы ==== */
 .form-inline {
     display: flex;
     align-items: center;
@@ -174,7 +164,6 @@ a.btn {
     outline: none;
 }
 
-/* ==== Уведомления ==== */
 .alert {
     padding: 12px 18px;
     border-radius: 8px;
@@ -217,7 +206,6 @@ a.btn {
     color: #1a5f8a;
 }
 
-/* ==== Прогресс-бар ==== */
 .progress-bar {
     width: 100px;
     height: 8px;
@@ -238,7 +226,6 @@ a.btn {
     margin-top: 2px;
 }
 
-/* ==== Карточки ==== */
 .card {
     background: #fff;
     border-radius: 10px;
@@ -260,7 +247,6 @@ a.btn {
     padding: 20px;
 }
 
-/* ==== Подвал ==== */
 .admin-footer {
     text-align: center;
     padding: 15px;
@@ -270,7 +256,6 @@ a.btn {
     border-top: 1px solid #ddd;
 }
 
-/* ==== Адаптивность ==== */
 @media (max-width: 900px) {
     .admin-container {
         flex-direction: column;

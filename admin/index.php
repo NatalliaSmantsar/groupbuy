@@ -28,7 +28,6 @@ include '../includes/db.php';
 
 <div class="admin-container">
 
-    <!-- Сайдбар -->
     <aside class="sidebar">
         <h2>Панель управления</h2>
         <a href="users.php">Управление пользователями</a>
@@ -37,7 +36,6 @@ include '../includes/db.php';
         <a href="orders.php">Управление закупками</a>
     </aside>
 
-    <!-- Контент -->
     <section class="admin-content">
 
         <h1 class="admin-title">Добро пожаловать в панель администратора!</h1>

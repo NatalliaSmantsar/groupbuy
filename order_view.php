@@ -30,7 +30,6 @@ if (!$order) {
     exit;
 }
 
-// Обработка отмены заказа через GET параметр
 if (isset($_GET['cancel_order']) && $_GET['cancel_order'] == '1' && ($_SESSION['user_id'] == $order['organizer_id'] || $_SESSION['role'] == 'admin')) {
     if (confirmCancellation()) {
         $cancel_stmt = $conn->prepare("UPDATE group_orders SET status = 'closed' WHERE id = ?");
@@ -45,7 +44,6 @@ if (isset($_GET['cancel_order']) && $_GET['cancel_order'] == '1' && ($_SESSION['
     }
 }
 
-// Функция подтверждения отмены
 function confirmCancellation() {
     if (!isset($_GET['confirm'])) {
         echo "
@@ -78,7 +76,6 @@ $status_label = $order['status'] === 'open' ? 'Открыта' :
 
 $active_tab = $_GET['tab'] ?? 'info';
 
-// Проверка прав для отмены заказа
 $can_cancel = isset($_SESSION['user_id']) && 
              ($_SESSION['user_id'] == $order['organizer_id'] || $_SESSION['role'] == 'admin') && 
              $order['status'] === 'open';
@@ -91,11 +88,8 @@ $can_cancel = isset($_SESSION['user_id']) &&
 <link rel="stylesheet" href="assets/css/recommendations.css">
 
 <div class="container">
-    <!-- Шапка закупки -->
     <div class="order-header">
         <h1 class="order-title"><?= htmlspecialchars($order['title']) ?></h1>
-        
-        <!-- Прогресс бар -->
         <div class="progress-section">
             <div class="progress-header">
                 <div class="progress-stats">
@@ -112,7 +106,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
         </div>
     </div>
 
-    <!-- Навигация по вкладкам -->
     <div class="tabs-navigation">
         <a href="?tab=info&id=<?= $id ?>" class="tab-link <?= $active_tab === 'info' ? 'active' : '' ?>">
             Основная информация
@@ -136,7 +129,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
     </div>
 
     <div class="tab-content">
-        <!-- Вкладка основной информации -->
         <?php if ($active_tab === 'info'): ?>
             <div class="card">
                 <div class="order-meta">
@@ -171,7 +163,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
                     </div>
                 </div>
 
-                <!-- Кнопка отмены без формы -->
                 <?php if ($can_cancel): ?>
                     <div style="margin-top: 10px;">
                         <a href="?id=<?= $id ?>&tab=info&cancel_order=1" class="btn btn-danger" 
@@ -184,8 +175,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
             </div>
         <?php endif; ?>
 
-        <!-- Остальное содержимое без изменений -->
-        <!-- Вкладка участников -->
         <?php if ($active_tab === 'participants'): ?>
             <div class="card">
                 <h3 class="section-title">Участники закупки</h3>
@@ -221,7 +210,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
             </div>
         <?php endif; ?>
 
-        <!-- Вкладка присоединения -->
         <?php if ($active_tab === 'join' && isset($_SESSION['user_id']) && $order['status'] === 'open' && $remaining_quantity > 0): ?>
             <?php $max_quantity = min(floor($remaining_quantity), 100); ?>
             <div class="card">
@@ -242,7 +230,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
             </div>
         <?php endif; ?>
 
-        <!-- Вкладка рекомендаций -->
         <?php if ($active_tab === 'recommendations' && isset($_SESSION['user_id']) && $_SESSION['user_id'] == $order['organizer_id'] && $order['status'] === 'open'): ?>
             <?php include 'includes/smart_algorithms.php'; ?>
             
@@ -292,7 +279,6 @@ $can_cancel = isset($_SESSION['user_id']) &&
             <?php endif; ?>
         <?php endif; ?>
 
-        <!-- Вкладка обсуждения -->
         <?php if ($active_tab === 'discussion'): ?>
             <div class="card">
                 <h3 class="section-title">Обсуждение закупки</h3>
@@ -355,7 +341,6 @@ function calculatePrice(quantity) {
     document.getElementById('calculated-price').textContent = total.toFixed(2).replace('.', ',');
 }
 
-// AJAX отправка сообщения
 document.getElementById('message-form')?.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -376,7 +361,6 @@ document.getElementById('message-form')?.addEventListener('submit', function(e) 
     submitButton.innerHTML = 'Отправка...';
     submitButton.disabled = true;
 
-    // Отправляем сообщение через AJAX
     fetch('send_message_ajax.php', {
         method: 'POST',
         headers: {
@@ -387,13 +371,8 @@ document.getElementById('message-form')?.addEventListener('submit', function(e) 
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Очищаем поле ввода
             this.text.value = '';
-            
-            // Добавляем новое сообщение в список
             addMessageToChat(data.message);
-            
-            // Показываем уведомление
             showNotification('Сообщение отправлено!', 'success');
         } else {
             showNotification('Ошибка: ' + data.message, 'error');
@@ -409,17 +388,14 @@ document.getElementById('message-form')?.addEventListener('submit', function(e) 
     });
 });
 
-// Функция для добавления сообщения в чат
 function addMessageToChat(messageData) {
     const messagesList = document.querySelector('.messages-list');
     const emptyState = document.querySelector('.empty-state');
     
-    // Убираем пустое состояние если оно есть
     if (emptyState) {
         emptyState.remove();
     }
     
-    // Создаем HTML для нового сообщения
     const initial = messageData.username.charAt(0).toUpperCase();
     const messageHTML = `
         <div class="message-item">
@@ -434,15 +410,12 @@ function addMessageToChat(messageData) {
         </div>
     `;
     
-    // Добавляем сообщение в конец списка
     if (messagesList) {
         messagesList.insertAdjacentHTML('beforeend', messageHTML);
         
-        // Прокручиваем к новому сообщению
         const newMessage = messagesList.lastElementChild;
         newMessage.scrollIntoView({ behavior: 'smooth' });
     } else {
-        // Если списка нет, создаем его
         const card = document.querySelector('.card');
         const form = document.getElementById('message-form');
         const messagesHTML = `

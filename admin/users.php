@@ -28,7 +28,6 @@ include '../includes/db.php';
 
 <div class="admin-container">
 
-    <!-- ФИКСИРОВАННАЯ ЛЕВАЯ ПАНЕЛЬ -->
     <div class="sidebar">
         <h2>Панель управления</h2>
         <a href="users.php" class="active">Управление пользователями</a>
@@ -37,17 +36,14 @@ include '../includes/db.php';
         <a href="orders.php">Управление закупками</a>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="admin-content">
 
         <h1 class="admin-title">Управление пользователями</h1>
 
         <?php
-        // Удаление пользователя
         if (isset($_GET['delete'])) {
             $id = intval($_GET['delete']);
 
-            // Не позволяем удалить себя
             if (isset($_SESSION['user_id']) && $id == $_SESSION['user_id']) {
                 echo "<div class='alert alert-error'>Нельзя удалить свою собственную учетную запись.</div>";
             } else {
@@ -60,7 +56,6 @@ include '../includes/db.php';
             }
         }
 
-        // Добавление пользователя
         if (isset($_POST['add'])) {
             $name = trim($_POST['name']);
             $email = trim($_POST['email']);
@@ -70,7 +65,6 @@ include '../includes/db.php';
             if ($name === '' || $email === '' || $password_raw === '' || $role === '') {
                 echo "<div class='alert alert-error'>Все поля обязательны для заполнения.</div>";
             } else {
-                // Проверка уникальности email
                 $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
                 $check->bind_param("s", $email);
                 $check->execute();
@@ -91,7 +85,6 @@ include '../includes/db.php';
         }
         ?>
 
-        <!-- Форма добавления -->
         <div class="card">
             <h3 class="section-title">Добавить нового пользователя</h3>
             <form method="POST" class="form-inline" data-need-validation>
@@ -107,7 +100,6 @@ include '../includes/db.php';
             </form>
         </div>
 
-        <!-- Список пользователей -->
         <div class="card">
             <h3 class="section-title">Список пользователей</h3>
 

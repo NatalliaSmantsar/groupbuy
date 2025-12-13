@@ -1,4 +1,3 @@
-/* === УВЕДОМЛЕНИЯ === */
 .notifications-section {
     margin-top: 20px;
 }
@@ -99,7 +98,6 @@
     min-width: 160px;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .notification-header {
         flex-direction: column;

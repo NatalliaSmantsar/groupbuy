@@ -15,7 +15,6 @@ $preselected_product = intval($_GET['product_id'] ?? 0);
 $error = '';
 $success = '';
 
-// Получаем рекомендации по оптимальному времени
 $optimal_time_data = get_optimal_creation_time($_SESSION['user_id']);
 $has_recommendations = !empty($optimal_time_data['top_recommendations']);
 
@@ -89,7 +88,6 @@ $active_tab = $_GET['tab'] ?? 'create';
 
     <div class="tab-content">
         <?php if ($active_tab === 'create'): ?>
-            <!-- Оригинальная форма создания закупки -->
             <form method="POST" class="form" id="create-order-form">
                 <div class="form-group">
                     <label class="form-label" for="title">Название закупки</label>
@@ -132,7 +130,6 @@ $active_tab = $_GET['tab'] ?? 'create';
             </form>
 
         <?php elseif ($active_tab === 'recommendations'): ?>
-            <!-- Вкладка с рекомендациями -->
             <div class="card">
                 <div class="card-content">
                     
@@ -236,7 +233,6 @@ document.getElementById('create-order-form').addEventListener('submit', function
     }
 });
 
-// Инициализация расчета при загрузке
 updateCalculation();
 </script>
 

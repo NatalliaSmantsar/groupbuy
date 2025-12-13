@@ -17,7 +17,6 @@ include 'includes/header.php';
         <input type="text" name="q" placeholder="Поиск по названию или организатору..." 
                value="<?= $q ?>" maxlength="100" class="form-control">
         <select name="status" class="form-control">
-            <option value="">Все статусы</option>
             <option value="open" <?= $status === 'open' ? 'selected' : '' ?>>Открытые</option>
             <option value="closed" <?= $status === 'closed' ? 'selected' : '' ?>>Отменённые</option>
             <option value="completed" <?= $status === 'completed' ? 'selected' : '' ?>>Завершенные</option>
@@ -38,7 +37,7 @@ include 'includes/header.php';
         $params[] = $like;
         $params[] = $like;
     }
-    
+
     if ($status !== '') {
         $conds[] = "g.status = ?";
         $params[] = $status;
@@ -46,8 +45,6 @@ include 'includes/header.php';
 
     if (count($conds) > 0) {
         $sql .= " WHERE " . implode(" AND ", $conds);
-    } else {
-        $sql .= " WHERE g.status IN ('open', 'completed')";
     }
 
     $sql .= " ORDER BY g.created_at DESC";

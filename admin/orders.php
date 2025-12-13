@@ -28,7 +28,6 @@ include '../includes/db.php';
 
 <div class="admin-container">
 
-    <!-- ФИКСИРОВАННАЯ ЛЕВАЯ ПАНЕЛЬ -->
     <div class="sidebar">
         <h2>Панель управления</h2>
         <a href="users.php">Управление пользователями</a>
@@ -37,13 +36,11 @@ include '../includes/db.php';
         <a href="orders.php" class="active">Управление закупками</a>
     </div>
 
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="admin-content">
 
         <h1 class="admin-title">Управление групповыми закупками</h1>
 
         <?php
-        /* ----------------------- ДОБАВЛЕНИЕ ------------------------ */
         if (isset($_POST['add'])) {
             $title = trim($_POST['title']);
             $desc = trim($_POST['description']);
@@ -72,7 +69,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ----------------------- УДАЛЕНИЕ ------------------------ */
         if (isset($_GET['delete'])) {
             $id = intval($_GET['delete']);
             $stmt = $conn->prepare("DELETE FROM group_orders WHERE id = ?");
@@ -82,7 +78,6 @@ include '../includes/db.php';
                 : "<div class='alert alert-error'>Ошибка при удалении.</div>";
         }
 
-        /* ----------------------- ПОЛУЧЕНИЕ ДАННЫХ ДЛЯ РЕДАКТИРОВАНИЯ ------------------------ */
         if (isset($_GET['edit'])) {
             $edit_id = intval($_GET['edit']);
             $stmt = $conn->prepare("SELECT * FROM group_orders WHERE id = ?");
@@ -91,7 +86,6 @@ include '../includes/db.php';
             $order = $stmt->get_result()->fetch_assoc();
         }
 
-        /* ----------------------- ОБНОВЛЕНИЕ ------------------------ */
         if (isset($_POST['update'])) {
             $id = intval($_POST['id']);
             $title = trim($_POST['title']);
@@ -114,7 +108,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ----------------------- ЗАПРОСЫ ------------------------ */
         $products = $conn->query("SELECT id, name FROM products ORDER BY name ASC");
         $organizers = $conn->query("SELECT id, name FROM users WHERE role IN ('organizer','admin') ORDER BY name ASC");
 
@@ -126,8 +119,6 @@ include '../includes/db.php';
             ORDER BY g.created_at DESC
         ");
         ?>
-
-        <!-- ==================== ФОРМЫ ==================== -->
 
         <?php if (isset($order)): ?>
         <div class="card">
@@ -180,8 +171,6 @@ include '../includes/db.php';
         </div>
 
         <?php endif; ?>
-
-        <!-- ==================== ТАБЛИЦА ==================== -->
 
         <div class="card">
             <h3 class="section-title">Список закупок</h3>

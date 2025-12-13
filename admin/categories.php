@@ -28,7 +28,6 @@ include '../includes/db.php';
 
 <div class="admin-container">
 
-    <!-- Сайдбар -->
     <aside class="sidebar">
         <h2>Панель управления</h2>
         <a href="users.php">Управление пользователями</a>
@@ -37,13 +36,11 @@ include '../includes/db.php';
         <a href="orders.php">Управление закупками</a>
     </aside>
 
-    <!-- Контент -->
     <section class="admin-content">
 
         <h1 class="admin-title">Управление категориями товаров</h1>
 
         <?php
-        /* ---------- Добавление ---------- */
         if (isset($_POST['add'])) {
             $name = trim($_POST['name']);
 
@@ -61,7 +58,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ---------- Удаление ---------- */
         if (isset($_GET['delete'])) {
             $id = intval($_GET['delete']);
 
@@ -85,7 +81,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ---------- Редактирование ---------- */
         if (isset($_GET['edit'])) {
             $edit_id = intval($_GET['edit']);
 
@@ -117,7 +112,6 @@ include '../includes/db.php';
             endif;
         }
 
-        /* ---------- Обновление ---------- */
         if (isset($_POST['update'])) {
             $id = intval($_POST['id']);
             $name = trim($_POST['name']);
@@ -138,7 +132,6 @@ include '../includes/db.php';
         ?>
 
         <?php if (!isset($_GET['edit'])): ?>
-        <!-- Форма добавления -->
         <div class="card">
             <h3 class="section-title">Добавить новую категорию</h3>
             <form method="POST" class="form-inline">
@@ -148,7 +141,6 @@ include '../includes/db.php';
         </div>
         <?php endif; ?>
 
-        <!-- Таблица категорий -->
         <div class="card">
             <h3 class="section-title">Список категорий</h3>
 

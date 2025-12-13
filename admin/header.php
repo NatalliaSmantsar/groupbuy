@@ -15,10 +15,7 @@ include '../includes/db.php';
     <meta charset="UTF-8">
     <title>Панель администратора — Групповые закупки</title>
 
-    <!-- Основные стили сайта -->
     <link rel="stylesheet" href="../assets/css/style.css">
-
-    <!-- Стиль панели администратора -->
     <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 <body>

@@ -30,7 +30,6 @@ if (!$product) {
 ?>
 
 <div class="container">
-    <!-- Информация о товаре -->
     <div class="card">
         <div class="order-header">
             <h1 class="order-title"><?= htmlspecialchars($product['name']) ?></h1>
@@ -55,7 +54,6 @@ if (!$product) {
         </div>
     </div>
 
-    <!-- Активные закупки -->
     <div class="card">
         <h3 class="section-title">Закупки с этим товаром</h3>
         

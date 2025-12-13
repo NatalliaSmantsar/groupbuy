@@ -28,7 +28,6 @@ include '../includes/db.php';
 
 <div class="admin-container">
 
-    <!-- ЛЕВАЯ ПАНЕЛЬ -->
     <aside class="sidebar">
         <h2>Панель управления</h2>
         <a href="users.php">Управление пользователями</a>
@@ -37,13 +36,11 @@ include '../includes/db.php';
         <a href="orders.php">Управление закупками</a>
     </aside>
 
-    <!-- КОНТЕНТ -->
     <main class="admin-content">
 
         <h1 class="admin-title">Управление товарами</h1>
 
         <?php
-        /* ----------- Добавление товара ----------- */
         if (isset($_POST['add'])) {
             $name = trim($_POST['name']);
             $desc = trim($_POST['description']);
@@ -65,7 +62,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ----------- Удаление товара ----------- */
         if (isset($_GET['delete'])) {
             $id = intval($_GET['delete']);
 
@@ -88,7 +84,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ----------- Редактирование товара ----------- */
         if (isset($_GET['edit'])) {
             $edit_id = intval($_GET['edit']);
             $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
@@ -102,7 +97,6 @@ include '../includes/db.php';
             }
         }
 
-        /* ----------- Обновление товара ----------- */
         if (isset($_POST['update'])) {
             $id = intval($_POST['id']);
             $name = trim($_POST['name']);
@@ -129,7 +123,6 @@ include '../includes/db.php';
         $cats = $conn->query("SELECT * FROM categories ORDER BY name ASC");
         ?>
 
-        <!-- Форма (карточка) -->
         <div class="card">
             <h3 class="section-title">
                 <?= isset($prod) ? "Редактирование товара" : "Добавить новый товар" ?>
@@ -170,7 +163,6 @@ include '../includes/db.php';
             </form>
         </div>
 
-        <!-- Таблица товаров -->
         <div class="card">
             <h3 class="section-title">Список товаров</h3>
 
