@@ -1,16 +1,7 @@
 <?php
-/**
- * Умные алгоритмы для групповых закупок
- */
-
-/**
- * АЛГОРИТМ 1: Интеллектуальный подбор участников
- * Анализирует историе покупок и предлагает пользователей для приглашения
- */
 function get_potential_participants($current_order_id, $limit = 10) {
     global $conn;
-    
-    // Получаем информацию о текущей закупке
+
     $order_stmt = $conn->prepare("
         SELECT g.*, p.category_id, p.name as product_name, p.price as product_price,
                u.name as organizer_name
@@ -28,7 +19,6 @@ function get_potential_participants($current_order_id, $limit = 10) {
     $target_product_id = $order_info['product_id'];
     $target_category_id = $order_info['category_id'];
     
-    // Получаем всех пользователей с их статистикой
     $users_stmt = $conn->prepare("
         SELECT 
             u.id,
@@ -55,30 +45,24 @@ function get_potential_participants($current_order_id, $limit = 10) {
     
     $users_with_scores = [];
     
-    // Рассчитываем коэффициент активности для каждого пользователя
     while ($user = $users_result->fetch_assoc()) {
         $score = 0;
         
-        // Фактор 1: Общая активность (30% веса)
         $activity_score = min(100, ($user['total_participations'] / 10) * 100) * 0.3;
         $score += $activity_score;
         
-        // Фактор 2: Недавняя активность (25% веса)
         $recent_score = min(100, ($user['recent_participations'] / 5) * 100) * 0.25;
         $score += $recent_score;
         
-        // Фактор 3: Среднее количество товаров (20% веса)
         $quantity_score = min(100, ($user['avg_quantity'] / 5) * 100) * 0.2;
         $score += $quantity_score;
         
-        // Фактор 4: Интерес к этой категории (15% веса)
         $category_interest = 0;
         if ($user['same_category_participations'] > 0) {
             $category_interest = min(100, ($user['same_category_participations'] / $user['total_participations']) * 200) * 0.15;
         }
         $score += $category_interest;
         
-        // Фактор 5: Интерес к этому товару (10% веса)
         $product_interest = 0;
         if ($user['same_product_participations'] > 0) {
             $product_interest = min(100, ($user['same_product_participations'] * 50)) * 0.1;
@@ -98,7 +82,6 @@ function get_potential_participants($current_order_id, $limit = 10) {
         ];
     }
     
-    // Сортируем по убыванию коэффициента активности
     usort($users_with_scores, function($a, $b) {
         return $b['score'] <=> $a['score'];
     });
@@ -109,14 +92,9 @@ function get_potential_participants($current_order_id, $limit = 10) {
     ];
 }
 
-/**
- * АЛГОРИТМ 2: Оптимизатор времени создания закупок
- * Анализирует когда пользователи наиболее активны
- */
 function get_optimal_creation_time($organizer_id = null) {
     global $conn;
     
-    // Базовый запрос для успешных закупок
     $query = "
         SELECT 
             HOUR(created_at) as creation_hour,
@@ -145,7 +123,6 @@ function get_optimal_creation_time($organizer_id = null) {
     $time_analysis = [];
     $total_successful = 0;
     
-    // Собираем статистику
     if ($result) {
         while ($row = $result->fetch_assoc()) {
             $hour = $row['creation_hour'];
@@ -155,7 +132,6 @@ function get_optimal_creation_time($organizer_id = null) {
         }
     }
     
-    // Если нет данных для анализа, возвращаем пустой результат
     if ($total_successful === 0) {
         return [
             'top_recommendations' => [],
@@ -164,13 +140,11 @@ function get_optimal_creation_time($organizer_id = null) {
         ];
     }
     
-    // Нормализуем данные и рассчитываем эффективность
     $optimal_times = [];
     $days_of_week = ['', 'Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
     
     foreach ($time_analysis as $day => $hours) {
         foreach ($hours as $hour => $data) {
-            // Рассчитываем эффективность
             $success_rate = ($data['success_count'] / max(1, $total_successful)) * 100;
             $speed_score = max(0, 100 - (($data['avg_time_to_first_participant'] ?? 24) * 2));
             $efficiency_score = ($success_rate * 0.6) + ($speed_score * 0.4);
@@ -188,7 +162,6 @@ function get_optimal_creation_time($organizer_id = null) {
         }
     }
     
-    // Сортируем по эффективности
     usort($optimal_times, function($a, $b) {
         return $b['efficiency_score'] <=> $a['efficiency_score'];
     });
@@ -200,13 +173,9 @@ function get_optimal_creation_time($organizer_id = null) {
     ];
 }
 
-/**
- * Отправить приглашение как внутреннее уведомление
- */
 function send_participation_invitation($to_email, $to_name, $order_info, $inviter_name) {
     global $conn;
     
-    // Находим ID пользователя по email
     $user_stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $user_stmt->bind_param("s", $to_email);
     $user_stmt->execute();
@@ -220,7 +189,6 @@ function send_participation_invitation($to_email, $to_name, $order_info, $invite
     
     $user_id = $user['id'];
     
-    // Создаем уведомление
     $subject = "Приглашение к участию в закупке: " . $order_info['title'];
     $message = "Приглашение к участию в закупке";
     
@@ -245,9 +213,6 @@ function send_participation_invitation($to_email, $to_name, $order_info, $invite
     }
 }
 
-/**
- * Проверить, участвовал ли пользователь уже в закупке
- */
 function has_user_participated($user_id, $order_id) {
     global $conn;
     

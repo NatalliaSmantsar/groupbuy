@@ -35,7 +35,7 @@ header nav a {
   font-weight: 500;
   padding: 8px 14px;
   border-radius: 6px;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 header nav a:hover {
@@ -82,7 +82,7 @@ button, input[type="submit"], input[type="button"] {
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 button:hover, input[type="submit"]:hover {
@@ -293,7 +293,7 @@ table tr:hover {
   text-decoration: none;
   padding: 10px 5px;
   border-radius: 6px;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
 }
 
 .sidebar a:hover {
@@ -324,7 +324,7 @@ a.button-link {
   padding: 8px 14px;
   border-radius: 6px;
   text-decoration: none;
-  transition: background 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 a.button-link:hover {
